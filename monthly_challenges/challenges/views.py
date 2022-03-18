@@ -1,6 +1,7 @@
+import imp
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
-
+from django.template.loader import render_to_string
 
 # Create your views here.
 
@@ -42,6 +43,11 @@ def monthly_challenge(request, month):
         print("returning 404")
         return HttpResponseNotFound()
     else:
+        response_data = render_to_string("challenges/challenge.html")
+        return render(request,"challenges/challenge.html",{
+            "month": month,
+            "month_result":month_result,
+        })
         return HttpResponse(
             f'''<h1>This is {month} req:
          \n{month_result}</h1>'''
